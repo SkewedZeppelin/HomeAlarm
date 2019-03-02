@@ -1,14 +1,17 @@
+#include <LowPower.h>
+
+
 int amtSensors = 1; //Max 12
 int pinStatusLED = 13;
 int pinBuzzer = 12;
 //int pinSiren = 11;
 int pinToggleArmed = 10;
-int checkDelay = 200;
-int passes = 0;
-int passesMax = 15; //30 seconds
 
-void setup() { 
-  //Serial.begin(9600);
+int passes = 0;
+int passesMax = 5;
+
+
+void setup() {
   pinMode(pinStatusLED, OUTPUT); //status LED
   pinMode(pinBuzzer, OUTPUT); //buzzer
   //pinMode(pinSiren, OUTPUT); //siren
@@ -19,25 +22,25 @@ void setup() {
 }
 
 void loop() {
+  //digitalWrite(pinStatusLED, HIGH);
   boolean armed = digitalRead(pinToggleArmed) == HIGH;
-  digitalWrite(pinStatusLED, HIGH);
-  
+
   int amtSensorsOpen = 0;
   for(int sp = 0; sp < amtSensors; sp++) {
     if(digitalRead(sp) == HIGH) {
       amtSensorsOpen = amtSensorsOpen + 1;
     }
   }
-  
+
   if(amtSensorsOpen > 0) {
     if(armed) {
       //digitalWrite(pinSiren, HIGH);
-      digitalWrite(pinBuzzer, HIGH);
+      digitalWrite(pinBuzzer, HIGH); //should be low if siren available
     } else {
       digitalWrite(pinBuzzer, HIGH);
-      delay(10);
+      LowPower.idle(SLEEP_30MS, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_OFF, TWI_OFF);
       digitalWrite(pinBuzzer, LOW);
-      delay(1000);
+      LowPower.idle(SLEEP_2S, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_OFF, TWI_OFF);
     }
   } else {
     if(passes >= passesMax) { //Keep siren on for time after closed
@@ -49,6 +52,7 @@ void loop() {
     }
   }
 
-  digitalWrite(pinStatusLED, LOW);
-  delay(checkDelay);
+  //digitalWrite(pinStatusLED, LOW);
+
+  LowPower.powerDown(SLEEP_2S, ADC_OFF, BOD_OFF);
 }
