@@ -24,3 +24,7 @@ Board
 Credits
 -------
 - Library: Low-Power, License: CC BY-SA 3.0, https://github.com/rocketscream/Low-Power
+
+Donate
+-------
+BTC: bc1qkjtp2k7cc4kuv8k9wjdlxkeuqczenrpv5mwasl
