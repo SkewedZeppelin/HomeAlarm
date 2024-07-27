@@ -23,7 +23,7 @@ Board
 
 Credits
 -------
-- Library: Low-Power, License: CC BY-SA 3.0, https://github.com/rocketscream/Low-Power
+- Library: Low-Power, License: CC BY-SA 3.0 [INCOMPATIBLE], https://github.com/rocketscream/Low-Power
 
 Donate
 -------
